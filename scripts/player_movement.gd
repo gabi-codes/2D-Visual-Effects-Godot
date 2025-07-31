@@ -1,25 +1,77 @@
 extends CharacterBody2D
 
+@onready var dash_timer: Timer = $DashTimer
 
-const SPEED = 1200.0
-const JUMP_VELOCITY = -1200.0
+@export var max_speed : float = 1400.0
+@export var gravity : float = 130
+@export var jump_force : int = 3400
+@export var dash_force : int = 3500
+@export var acceleration : int = 150
+@export var jump_buffer : int = 10
+@export var cayote_time : int = 7
 
+signal player_dash
+
+var jump_buffer_counter : int = 0
+var cayote_counter : int = 0
+var can_dash : bool = true
+var dashing : bool = false
 
 func _physics_process(delta: float) -> void:
-	# Add the gravity.
-	if not is_on_floor():
-		velocity += get_gravity() * delta
-
-	# Handle jump.
-	if Input.is_action_just_pressed("ui_accept") and is_on_floor():
-		velocity.y = JUMP_VELOCITY
-
-	# Get the input direction and handle the movement/deceleration.
-	# As good practice, you should replace UI actions with custom gameplay actions.
-	var direction := Input.get_axis("ui_left", "ui_right")
-	if direction:
-		velocity.x = direction * SPEED
-	else:
-		velocity.x = move_toward(velocity.x, 0, SPEED)
-
 	move_and_slide()
+
+	var direction = Input.get_axis("left", "right")
+
+	if Input.is_action_just_pressed("jump"):
+		jump()
+	
+	if Input.is_action_just_released("jump") and velocity.y < 0 and not dashing:
+		velocity.y *= 0.2
+
+	if Input.is_action_just_pressed("dash") and can_dash: 
+		dash()
+
+	if is_on_floor():
+		cayote_counter = cayote_time
+		if not dashing: can_dash = true
+	
+	if not is_on_floor():
+		if cayote_counter > 0: cayote_counter -= 1
+		if dashing: velocity.y = 0
+		if not dashing: velocity.y += gravity
+		if velocity.y > 6000: velocity.y = 6000
+	
+	if jump_buffer_counter > 0: jump_buffer_counter -= 1
+	
+	if jump_buffer_counter > 0 and cayote_counter > 0:
+		velocity.y = -jump_force
+		jump_buffer_counter = 0
+		cayote_counter = 0
+	
+	if not dashing:
+	
+		if direction:
+			velocity.x += acceleration * direction
+			if velocity.x > max_speed: velocity.x = lerp(velocity.x, max_speed, 0.2)
+			elif velocity.x < -max_speed: velocity.x = lerp(velocity.x, -max_speed, 0.2)
+		else:
+			velocity.x = lerp(velocity.x, 0.0, 0.35)
+	
+
+func dash():
+	var dir = 1
+	if Input.is_action_pressed("left"): dir = -1
+	else: dir = 1
+	
+	velocity.x = dash_force * dir
+	dash_timer.start(0.2)
+	dashing = true
+	can_dash = false
+
+
+func jump():
+	jump_buffer_counter = jump_buffer
+
+
+func _on_dash_timer_timeout() -> void:
+	dashing = false
