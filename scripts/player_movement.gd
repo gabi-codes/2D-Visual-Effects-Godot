@@ -1,8 +1,9 @@
 extends CharacterBody2D
 
 @onready var dash_timer: Timer = $DashTimer
+@onready var sprite_2d: AnimatedSprite2D = $Sprite2D
 
-@export var max_speed : float = 1400.0
+@export var max_speed : float = 1200.0
 @export var gravity : float = 130
 @export var jump_force : int = 3400
 @export var dash_force : int = 3500
@@ -16,8 +17,16 @@ var jump_buffer_counter : int = 0
 var cayote_counter : int = 0
 var can_dash : bool = true
 var dashing : bool = false
+var spikes_touched : bool = false
+
+
+func _ready() -> void:
+	Global.spike_touched.connect(death)
+
 
 func _physics_process(delta: float) -> void:
+	
+	if spikes_touched: return
 	move_and_slide()
 
 	var direction = Input.get_axis("left", "right")
@@ -30,10 +39,20 @@ func _physics_process(delta: float) -> void:
 
 	if Input.is_action_just_pressed("dash") and can_dash: 
 		dash()
+		
+	if direction == 1:
+		sprite_2d.flip_h = false
+	elif direction == -1:
+		sprite_2d.flip_h = true
 
 	if is_on_floor():
 		cayote_counter = cayote_time
 		if not dashing: can_dash = true
+		if direction == 0: sprite_2d.play("idle")
+		else: sprite_2d.play("walk")
+	
+	if velocity.y != 0 and sprite_2d.animation != "jump":
+		sprite_2d.play("jump")
 	
 	if not is_on_floor():
 		if cayote_counter > 0: cayote_counter -= 1
@@ -71,6 +90,17 @@ func dash():
 
 func jump():
 	jump_buffer_counter = jump_buffer
+
+
+func death():
+	var direction = velocity.normalized() * -1
+	var death_position : Vector2 = self.position + direction * 600
+	
+	spikes_touched = true
+	
+	var tween : Tween = get_tree().create_tween()
+	tween.tween_property(self, "position", death_position, 0.5).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+	tween.tween_property(sprite_2d.material, "shader_parameter/dissolve_value", 0.0, 0.4)
 
 
 func _on_dash_timer_timeout() -> void:

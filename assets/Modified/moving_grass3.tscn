@@ -1,0 +1,31 @@
+[gd_scene load_steps=5 format=3 uid="uid://wfsainm8c4pl"]
+
+[ext_resource type="Script" path="res://scripts/moving_grass.gd" id="1_4n4hk"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_fbhq5"]
+load_path = "res://.godot/imported/Mossy - Decorations&Hazards.png-3020281d6a6c676ecce24f91b9daabe8.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g7uy2"]
+atlas = SubResource("CompressedTexture2D_fbhq5")
+region = Rect2(87, 3077, 335, 440)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6b63d"]
+size = Vector2(192, 315.5)
+
+[node name="MovingGrass" type="Node2D"]
+script = ExtResource("1_4n4hk")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(-25, -161)
+texture = SubResource("AtlasTexture_g7uy2")
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 16
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(0, -127.25)
+shape = SubResource("RectangleShape2D_6b63d")
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]
