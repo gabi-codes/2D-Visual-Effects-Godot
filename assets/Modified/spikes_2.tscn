@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://cpx2bg8x2tmjh"]
+
+[ext_resource type="Script" path="res://scripts/spikes.gd" id="1_2te0u"]
+[ext_resource type="Texture2D" uid="uid://c32wubig6qj05" path="res://assets/atlas/Mossy - Decorations&Hazards.png" id="2_rdpol"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0uumg"]
+atlas = ExtResource("2_rdpol")
+region = Rect2(2066, 972, 1225, 808)
+
+[node name="Spikes2" type="Area2D"]
+collision_layer = 16
+collision_mask = 16
+script = ExtResource("1_2te0u")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+visible = false
+polygon = PackedVector2Array(-485, -204, -254, -90, 94, -319, 372, -265, 554, 41, 498, 283, 278, 294, 345, 45, 193, -105, -185, 133, -625, -42)
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = SubResource("AtlasTexture_0uumg")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

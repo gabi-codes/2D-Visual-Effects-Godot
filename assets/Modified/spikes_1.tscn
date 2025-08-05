@@ -4,11 +4,11 @@
 [ext_resource type="Texture2D" uid="uid://c32wubig6qj05" path="res://assets/atlas/Mossy - Decorations&Hazards.png" id="1_pb1ol"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_gkijg"]
-radius = 204.539
+radius = 384.22
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_0uumg"]
 atlas = ExtResource("1_pb1ol")
-region = Rect2(1665, 1893, 456, 423)
+region = Rect2(435, 1635, 917, 850)
 
 [node name="Spikes1" type="Area2D"]
 collision_layer = 16
@@ -16,7 +16,8 @@ collision_mask = 16
 script = ExtResource("1_kickp")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(2, 12)
+visible = false
+position = Vector2(2, 44)
 shape = SubResource("CircleShape2D_gkijg")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
