@@ -2,6 +2,8 @@ extends CharacterBody2D
 
 @onready var dash_timer: Timer = $DashTimer
 @onready var sprite_2d: AnimatedSprite2D = $Sprite2D
+@onready var vignette: ColorRect = $Camera2D/Vignette
+
 
 @export var max_speed : float = 1200.0
 @export var gravity : float = 130
@@ -23,6 +25,8 @@ var can_double_jump : bool = true
 
 func _ready() -> void:
 	Global.spike_touched.connect(death)
+	Global.cave_in.connect(cave_in)
+	Global.cave_out.connect(cave_out)
 
 
 func _physics_process(delta: float) -> void:
@@ -112,6 +116,15 @@ func death():
 	await tween.finished
 	velocity = Vector2.ZERO
 	spikes_touched = false
+
+
+func cave_in():
+	var tween : Tween = get_tree().create_tween()
+	tween.tween_property(vignette.material, "shader_parameter/base_radius", 0.95, 2.0).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+
+func cave_out():
+	var tween : Tween = get_tree().create_tween()
+	tween.tween_property(vignette.material, "shader_parameter/base_radius", 0.58, 2.0).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
 
 
 func _on_dash_timer_timeout() -> void:

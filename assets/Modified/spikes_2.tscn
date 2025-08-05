@@ -13,8 +13,7 @@ collision_mask = 16
 script = ExtResource("1_2te0u")
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
-visible = false
-polygon = PackedVector2Array(-485, -204, -254, -90, 94, -319, 372, -265, 554, 41, 498, 283, 278, 294, 345, 45, 193, -105, -185, 133, -625, -42)
+polygon = PackedVector2Array(-500, -196, -393, -108, -211, -63, -6, -221, 156, -296, 408, -187, 516, 25, 475, 279, 314, 353, 381, 58, 331, -49, 151, -140, -189, 89, -417, 41, -606, -80)
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = SubResource("AtlasTexture_0uumg")

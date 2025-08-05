@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://c32wubig6qj05" path="res://assets/atlas/Mossy - Decorations&Hazards.png" id="1_pb1ol"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_gkijg"]
-radius = 384.22
+radius = 346.071
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_0uumg"]
 atlas = ExtResource("1_pb1ol")
