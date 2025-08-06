@@ -57,8 +57,13 @@ func _physics_process(delta: float) -> void:
 		if direction == 0: sprite_2d.play("idle")
 		else: sprite_2d.play("walk")
 	
-	if velocity.y != 0 and sprite_2d.animation != "jump":
-		sprite_2d.play("jump")
+	if sprite_2d.animation != "jump" and not dashing:
+		if velocity.y > 0:
+			sprite_2d.play("jump")
+			sprite_2d.frame = 7
+		elif velocity.y < 0:
+			sprite_2d.play("jump")
+		
 	
 	if not is_on_floor():
 		if cayote_counter > 0: cayote_counter -= 1
@@ -93,6 +98,7 @@ func dash():
 	if sprite_2d.flip_h: dir = -1
 	
 	velocity.x = dash_force * dir
+	sprite_2d.play("dash")
 	dash_timer.start(0.2)
 	dashing = true
 	can_dash = false
