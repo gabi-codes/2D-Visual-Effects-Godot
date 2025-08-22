@@ -3,7 +3,7 @@ extends CharacterBody2D
 @onready var dash_timer: Timer = $DashTimer
 @onready var sprite_2d: AnimatedSprite2D = $Sprite2D
 @onready var vignette: ColorRect = $Camera2D/Vignette
-
+@onready var camera_2d: Camera2D = $Camera2D
 
 @export var max_speed : float = 1200.0
 @export var gravity : float = 130
@@ -12,6 +12,12 @@ extends CharacterBody2D
 @export var acceleration : int = 150
 @export var jump_buffer : int = 10
 @export var cayote_time : int = 7
+
+@export var shake_strength: float = 30.0
+@export var shake_duration: float = 0.3
+
+var _initial_position: Vector2
+var _is_shaking: bool = false
 
 signal player_dash
 
@@ -22,6 +28,7 @@ var dashing : bool = false
 var spikes_touched : bool = false
 var can_double_jump : bool = true
 
+var deaths: int = 0
 
 func _ready() -> void:
 	Global.spike_touched.connect(death)
@@ -108,6 +115,8 @@ func death():
 	
 	if spikes_touched: return
 	
+	start_shake()
+	
 	var direction = velocity.normalized() * -1
 	var death_position : Vector2 = self.position + direction * 600
 	
@@ -120,6 +129,9 @@ func death():
 	tween.tween_property(sprite_2d.material, "shader_parameter/dissolve_value", 1.0, 0.4)
 	
 	await tween.finished
+	
+	deaths += 1
+	
 	velocity = Vector2.ZERO
 	spikes_touched = false
 
@@ -135,3 +147,27 @@ func cave_out():
 
 func _on_dash_timer_timeout() -> void:
 	dashing = false
+
+
+func start_shake():
+	if _is_shaking:
+		pass
+		
+	_is_shaking = true
+	var shake_tween = create_tween()
+	shake_tween.set_parallel(true)
+	shake_tween.tween_method(shake, 0.0, 1.0, shake_duration)
+	shake_tween.tween_callback(_on_shake_finished)
+
+
+func shake(intensity: float):
+	var random_offset = Vector2(
+		randf_range(-1.0, 1.0) * shake_strength * intensity,
+		randf_range(-1.0, 1.0) * shake_strength * intensity
+	)
+
+	camera_2d.position = _initial_position + random_offset
+
+func _on_shake_finished():
+	camera_2d.position = _initial_position
+	_is_shaking = false
