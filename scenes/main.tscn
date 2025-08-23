@@ -1,6 +1,6 @@
 [gd_scene load_steps=178 format=4 uid="uid://cefrqtfbane6x"]
 
-[ext_resource type="Shader" path="res://test.gdshader" id="1_lyege"]
+[ext_resource type="Shader" path="res://shaders/test.gdshader" id="1_lyege"]
 [ext_resource type="Texture2D" uid="uid://bvvbfhaiqs1l5" path="res://assets/Mossy Tileset/Mossy - BackgroundDecoration.png" id="1_thvkx"]
 [ext_resource type="Texture2D" uid="uid://dkv6esok7gv16" path="res://assets/Mossy Tileset/Mossy - Decorations&Hazards.png" id="2_as7t4"]
 [ext_resource type="Texture2D" uid="uid://c8a2ae7xyftwh" path="res://assets/Mossy Tileset/Mossy - FloatingPlatforms.png" id="3_v5q1y"]
@@ -8,7 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://da1s0yc0ew43m" path="res://assets/atlas/Mossy - BackgroundDecoration.png" id="6_k7ywu"]
 [ext_resource type="Texture2D" uid="uid://2dyesmsbh0ey" path="res://assets/Mossy Tileset/Mossy - TileSet.png" id="6_o331s"]
 [ext_resource type="Texture2D" uid="uid://drjsnd84dm2c6" path="res://assets/BlueWizard/2BlueWizardIdle/Chara - BlueIdle00000.png" id="7_0i7s1"]
-[ext_resource type="Shader" path="res://blur.gdshader" id="7_0qstf"]
+[ext_resource type="Shader" path="res://shaders/blur.gdshader" id="7_0qstf"]
 [ext_resource type="Script" path="res://scripts/player_movement.gd" id="7_ftg6j"]
 [ext_resource type="Texture2D" uid="uid://c32wubig6qj05" path="res://assets/atlas/Mossy - Decorations&Hazards.png" id="7_hl8sg"]
 [ext_resource type="Script" path="res://scripts/tile_map_bg_far.gd" id="8_3rab2"]
@@ -17,8 +17,8 @@
 [ext_resource type="Texture2D" uid="uid://i8j4huowqt6f" path="res://assets/Plant Animations/BlueFlower2/BluePlantClosed_00000.png" id="10_x2l5t"]
 [ext_resource type="Texture2D" uid="uid://cfq3rqqh7kj0j" path="res://assets/atlas/Mossy - MossyHills.png" id="11_qoomc"]
 [ext_resource type="PackedScene" uid="uid://n7qnkbfcbeqj" path="res://assets/Modified/flower_1.tscn" id="11_tdail"]
-[ext_resource type="Texture2D" uid="uid://8t48jb8cfa4h" path="res://light.png" id="15_ppf28"]
-[ext_resource type="Texture2D" uid="uid://dmhu7rxlnt7gv" path="res://particle.png" id="16_lnd6y"]
+[ext_resource type="Texture2D" uid="uid://8t48jb8cfa4h" path="res://assets/light.png" id="15_ppf28"]
+[ext_resource type="Texture2D" uid="uid://dmhu7rxlnt7gv" path="res://assets/particle.png" id="16_lnd6y"]
 [ext_resource type="Shader" path="res://shaders/dissolve.gdshader" id="16_uf0ph"]
 [ext_resource type="Texture2D" uid="uid://cen06nc7j1gvq" path="res://assets/BlueWizard/2BlueWizardJump/Dash2/DashBlue_00000.png" id="17_1p2g5"]
 [ext_resource type="Texture2D" uid="uid://bthk2bwqv2lis" path="res://assets/BlueWizard/2BlueWizardIdle/Chara - BlueIdle00001.png" id="17_tkpj1"]
@@ -3474,7 +3474,7 @@ offset_left = -7597.0
 offset_top = -9402.0
 offset_right = 44351.0
 offset_bottom = 6957.0
-color = Color(0.210151, 0.568552, 0.721756, 0.384314)
+color = Color(0.211765, 0.643137, 0.721569, 0.384314)
 
 [node name="CharacterBody2D" type="CharacterBody2D" parent="."]
 position = Vector2(-2081, -1237)
@@ -3523,7 +3523,7 @@ color = Color(0.296206, 0.479963, 0.491125, 1)
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="."]
 position = Vector2(6331, -1659)
-amount = 165
+amount = 300
 process_material = SubResource("ParticleProcessMaterial_eelae")
 texture = ExtResource("16_lnd6y")
 lifetime = 6.0
@@ -3842,6 +3842,11 @@ position = Vector2(4948, -3530)
 rotation = 1.68518
 scale = Vector2(0.755, 0.755)
 
+[node name="Spikes8" parent="TileMapFirst/Normal" instance=ExtResource("69_2f17p")]
+position = Vector2(6082, -2582)
+rotation = 2.37442
+scale = Vector2(0.815, 0.815)
+
 [node name="Spikes123" parent="TileMapFirst/Normal" instance=ExtResource("69_2f17p")]
 position = Vector2(21587, -6834)
 rotation = -0.541893
@@ -3943,8 +3948,8 @@ rotation = 2.78038
 scale = Vector2(1.17, 1.17)
 
 [node name="Spikes3" parent="TileMapFirst/Normal" instance=ExtResource("67_fb5ll")]
-position = Vector2(6479, -2378)
-rotation = 1.36857
+position = Vector2(5440, -2889)
+rotation = 0.615357
 scale = Vector2(0.725, 0.725)
 
 [node name="Spikes6" parent="TileMapFirst/Normal" instance=ExtResource("67_fb5ll")]
@@ -4306,11 +4311,6 @@ scale = Vector2(1.185, 1.185)
 position = Vector2(1645, -245)
 rotation = 3.33937
 scale = Vector2(1.185, 1.185)
-
-[node name="Spikes8" parent="TileMapFirst/Normal" instance=ExtResource("69_2f17p")]
-position = Vector2(6320, -2419)
-rotation = 4.14695
-scale = Vector2(0.815, 0.815)
 
 [node name="Spikes4" parent="TileMapFirst/Normal" instance=ExtResource("71_37jqv")]
 position = Vector2(8713, -954)
