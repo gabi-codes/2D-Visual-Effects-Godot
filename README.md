@@ -14,11 +14,11 @@ The main goal was to explore how custom shaders, visual effects, and engine-side
 
 ---
 
-## What This Project Demonstrates
+## What My Project Demonstrates
 
 - Custom 2D shaders
 - Visual effects improving depth and atmosphere
-- Procedural animations
+- Procedural and tween-based animations
 - Shader-based techniques for lighting and environmental effects
 - Improving visual quality using only free assets as a base
 
