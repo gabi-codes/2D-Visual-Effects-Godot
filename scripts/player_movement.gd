@@ -115,6 +115,7 @@ func death():
 	
 	if spikes_touched: return
 	
+	deaths += 1
 	start_shake()
 	
 	var direction = velocity.normalized() * -1
@@ -130,19 +131,25 @@ func death():
 	
 	await tween.finished
 	
-	deaths += 1
-	
 	velocity = Vector2.ZERO
 	spikes_touched = false
 
 
 func cave_in():
 	var tween : Tween = get_tree().create_tween()
-	tween.tween_property(vignette.material, "shader_parameter/base_radius", 0.95, 2.0).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+	tween.tween_property(
+		vignette.material, 
+		"shader_parameter/base_radius", 
+		0.95, 
+		2.0).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
 
 func cave_out():
 	var tween : Tween = get_tree().create_tween()
-	tween.tween_property(vignette.material, "shader_parameter/base_radius", 0.58, 2.0).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+	tween.tween_property(
+		vignette.material, 
+		"shader_parameter/base_radius",
+		0.58, 
+		2.0).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
 
 
 func _on_dash_timer_timeout() -> void:
