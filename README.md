@@ -26,6 +26,9 @@ The main goal was to explore how custom shaders, visual effects, and engine-side
 
 ## Visual Showcase
 
+![demo](gif2.gif)
+![demo](gif3.gif)
+
 ---
 
 ## Tools & Technologies
